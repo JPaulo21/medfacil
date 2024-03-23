@@ -1,4 +1,4 @@
-package com.api.medfacil.entity;
+package com.api.medfacil.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity(name = "User")
-@Table(name = "users")
+@Table(name = "users",
+        indexes = {@Index(name = "idx_phone_complete", columnList = "ddi, ddd, phone_number")})
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -19,6 +20,8 @@ public class User {
 
     @Column(unique = true, length = 11)
     private String cpf;
+
+    private String password;
 
     private String name;
 
@@ -38,5 +41,9 @@ public class User {
 
     @Column(name = "phone_number", length = 9)
     private String phoneNumber;
+
+    private String role;
+
+    private boolean enable;
 
 }
