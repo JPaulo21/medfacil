@@ -17,7 +17,7 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 11)
     private String cpf;
 
     private String name;
