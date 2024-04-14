@@ -1,10 +1,7 @@
 package com.api.medfacil.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -14,6 +11,7 @@ public record UserDTO (
         @CPF
         String cpf,
         @NotBlank
+        @Pattern(regexp = "[a-zA-ZÀ-ÿ\\s]+$", message = "Somente letras e espaços são permitidos")
         String name,
         @Past
         @NotNull

@@ -7,7 +7,7 @@ import com.api.medfacil.web.mapper.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid UserDTO userDTO, UriComponentsBuilder ucb){
         User user = userService.save(userMapper.toUser(userDTO));
         URI location = ucb
