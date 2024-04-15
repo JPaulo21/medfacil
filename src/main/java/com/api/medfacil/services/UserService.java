@@ -27,7 +27,6 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean existsNumber(){
-
         return false;
     }
 
@@ -40,11 +39,20 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User updatePassword(String cpf, String code) {
-        log.info(cpf);
         User user = userRepository.findByCpf(cpf).orElseThrow(
                         () -> new UsernameNotFoundException("Usuário não encontrado")
         );
         user.setPassword(passwordEncoder.encode(code));
         return userRepository.save(user);
     }
+
+    @Transactional
+    public void cleanPassword(String cpf){
+        log.info("Limpar senha do usuário: {}", cpf);
+        User user = userRepository.findByCpf(cpf).orElseThrow(
+                () -> new UsernameNotFoundException("Usuário não encontrado")
+        );
+        user.setPassword(null);
+    }
+
 }

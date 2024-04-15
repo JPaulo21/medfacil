@@ -49,6 +49,7 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             TokenDTO token = new TokenDTO(tokenService.generateToken(user));
+            userService.cleanPassword(user.getCpf());
             return ResponseEntity.ok(token);
         }catch(AuthenticationException e){
             log.warn("Erro de autenticação: {}", e.getMessage());
