@@ -21,13 +21,14 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User save(User user){
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        numberAlreadyRegistered(user.getDdi(), user.getDdd(), user.getPhoneNumber());
         return userRepository.save(user);
     }
 
-    public boolean existsNumber(){
-        return false;
+    public void numberAlreadyRegistered(String ddi, String ddd, String phoneNumber){
+        if(userRepository.findByNumber(ddi, ddd, phoneNumber).isPresent()){
+            throw new RuntimeException("Número já cadastrado!");
+        }
     }
 
     @Override

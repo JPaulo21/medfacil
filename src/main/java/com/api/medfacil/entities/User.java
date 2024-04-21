@@ -87,6 +87,6 @@ public class User implements UserDetails {
     }
 
     public String fullNumber(){
-        return this.ddi+this.ddd.replace("0","")+this.phoneNumber;
+        return this.ddi+this.ddd+this.phoneNumber;
     }
 }
