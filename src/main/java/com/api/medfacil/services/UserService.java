@@ -1,6 +1,8 @@
 package com.api.medfacil.services;
 
 import com.api.medfacil.entities.User;
+import com.api.medfacil.exceptions.CpfRegisteredException;
+import com.api.medfacil.exceptions.FullNumberRegisteredException;
 import com.api.medfacil.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +28,13 @@ public class UserService implements UserDetailsService {
     }
 
     public void numberAlreadyRegistered(String ddi, String ddd, String phoneNumber){
-        if(userRepository.findByNumber(ddi, ddd, phoneNumber).isPresent()){
-            throw new RuntimeException("Número já cadastrado!");
-        }
+        if(userRepository.findByNumber(ddi, ddd, phoneNumber).isPresent())
+            throw new FullNumberRegisteredException("Número já cadastrado!");
+    }
+
+    public void cpfRegistered(String cpf){
+        if(userRepository.findByCpf(cpf).isPresent())
+            throw new CpfRegisteredException("Já existe uma conta vinculada ao cpf informado");
     }
 
     @Override
