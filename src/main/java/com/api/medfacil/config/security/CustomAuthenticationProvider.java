@@ -1,28 +1,42 @@
 package com.api.medfacil.config.security;
 
-import com.api.medfacil.repositories.UserRepository;
+import com.api.medfacil.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import static java.util.Objects.isNull;
+
+@Slf4j
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String cpf = authentication.getName(); // Obtenha o CPF do usuário do processo de autenticação
-        UserDetails userDetails = userRepository.findByCpf(cpf).orElseThrow(
-                () -> new UsernameNotFoundException("Usuário não encontrado")
-        );
+        String cpf = authentication.getName();
+        String code = authentication.getCredentials().toString();
 
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        UserDetails user = userService.loadUserByUsername(cpf);
+
+        if(isNull(user.getPassword()))
+            throw new AuthenticationException("Solicite seu código de acesso e faça seu login") {};
+
+        if(!passwordEncoder.matches(code, user.getPassword()))
+            throw new BadCredentialsException("Usuário/Código inválido");
+
+        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 
     @Override
