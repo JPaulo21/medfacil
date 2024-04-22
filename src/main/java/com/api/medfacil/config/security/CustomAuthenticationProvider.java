@@ -22,8 +22,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 () -> new UsernameNotFoundException("Usuário não encontrado")
         );
 
-        // Verifique as credenciais, etc., se necessário
-
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
