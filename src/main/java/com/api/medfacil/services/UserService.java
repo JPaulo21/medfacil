@@ -57,9 +57,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void cleanPassword(String cpf){
         log.info("Limpar senha do usuário: {}", cpf);
-        User user = userRepository.findByCpf(cpf).orElseThrow(
-                () -> new UsernameNotFoundException("Usuário não encontrado")
-        );
+        User user = userRepository.findByCpf(cpf).get();
         user.setPassword(null);
     }
 
