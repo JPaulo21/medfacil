@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.time.LocalDate;
 
 public record UserDTO (
-        @CPF
+        @CPF(message = "CPF inválido!")
         String cpf,
         @NotBlank
         @Pattern(regexp = "[a-zA-ZÀ-ÿ\\s]+$", message = "Somente letras e espaços são permitidos")
@@ -19,7 +19,7 @@ public record UserDTO (
         LocalDate birthDate,
         @Length(min = 1, max = 1)
         String sex,
-        @Email
+        @Email(message = "E-mail inválido!")
         String email,
         String ddi,
         String ddd,
