@@ -43,17 +43,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDTO loginDTO){
-        try{
-            var authToken = new UsernamePasswordAuthenticationToken(loginDTO.cpf(), loginDTO.password());
-            Authentication auth = authenticationManager.authenticate(authToken);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            TokenDTO token = new TokenDTO(tokenService.generateToken(user));
-            userService.cleanPassword(user.getCpf());
-            return ResponseEntity.ok(token);
-        }catch(AuthenticationException e){
-            log.warn("Erro de autenticação: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        var authToken = new UsernamePasswordAuthenticationToken(loginDTO.cpf(), loginDTO.code());
+        Authentication auth = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TokenDTO token = new TokenDTO(tokenService.generateToken(user));
+        userService.cleanPassword(user.getCpf());
+        return ResponseEntity.ok(token);
     }
 }

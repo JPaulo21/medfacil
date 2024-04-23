@@ -31,10 +31,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UserDetails user = userService.loadUserByUsername(cpf);
 
         if(isNull(user.getPassword()))
-            throw new AuthenticationException("Solicite seu código de acesso e faça seu login") {};
+            throw new BadCredentialsException("Solicite seu código de acesso e faça seu login");
 
         if(!passwordEncoder.matches(code, user.getPassword()))
-            throw new BadCredentialsException("Usuário/Código inválido");
+            throw new AuthenticationException("Usuário/Código inválidos") {};
 
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
