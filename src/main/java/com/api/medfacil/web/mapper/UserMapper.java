@@ -1,7 +1,7 @@
 package com.api.medfacil.web.mapper;
 
 import com.api.medfacil.entities.User;
-import com.api.medfacil.web.dto.UserDTO;
+import com.api.medfacil.web.dto.user.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
