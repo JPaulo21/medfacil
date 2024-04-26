@@ -1,4 +1,4 @@
-package com.api.medfacil.web.dto;
+package com.api.medfacil.web.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;

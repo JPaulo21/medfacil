@@ -2,7 +2,7 @@ package com.api.medfacil.web.controller;
 
 import com.api.medfacil.entities.Medicine;
 import com.api.medfacil.services.MedicineService;
-import com.api.medfacil.web.dto.MedicineDTO;
+import com.api.medfacil.web.dto.medicine.MedicineDTO;
 import com.api.medfacil.web.mapper.MedicineMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

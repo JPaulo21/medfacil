@@ -1,4 +1,4 @@
-package com.api.medfacil.web.dto;
+package com.api.medfacil.web.dto.login;
 
 import jakarta.validation.constraints.NotBlank;
 
