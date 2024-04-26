@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,11 +18,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ResponseError> authenticationException(AuthenticationException e){
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ResponseError(HttpStatus.UNAUTHORIZED, 401, e.getMessage()));
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ResponseError> BadCredentialsException(BadCredentialsException e){
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(new ResponseError(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.value(),"Usuário/Senha inválidos!"));
+                .body(new ResponseError(HttpStatus.UNAUTHORIZED, 401, e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -30,7 +38,7 @@ public class ApplicationControllerAdvice {
         return ResponseEntity
                 .badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ResponseError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), e.getBindingResult().getFieldError().getDefaultMessage()));
+                .body(new ResponseError(HttpStatus.BAD_REQUEST, 400, result.getFieldError().getDefaultMessage()));
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
@@ -38,7 +46,7 @@ public class ApplicationControllerAdvice {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ResponseError(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), e.getMessage()));
+                .body(new ResponseError(HttpStatus.NOT_FOUND, 404, e.getMessage()));
     }
 
     @ExceptionHandler(CpfRegisteredException.class)
@@ -46,7 +54,7 @@ public class ApplicationControllerAdvice {
         return ResponseEntity
                 .badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ResponseError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+                .body(new ResponseError(HttpStatus.BAD_REQUEST, 400, e.getMessage()));
     }
 
     @ExceptionHandler(FullNumberRegisteredException.class)
@@ -54,7 +62,7 @@ public class ApplicationControllerAdvice {
         return ResponseEntity
                 .badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ResponseError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+                .body(new ResponseError(HttpStatus.BAD_REQUEST, 400, e.getMessage()));
     }
 
 
