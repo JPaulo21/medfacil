@@ -28,6 +28,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
+    public User findById(Integer id){
+        return userRepository.findById(id).orElseThrow(
+                () -> new UsernameNotFoundException("Usuário não encontrado")
+        );
+    }
+
     public void numberAlreadyRegistered(String ddi, String ddd, String phoneNumber){
         if(userRepository.findByNumber(ddi, ddd, phoneNumber).isPresent())
             throw new FullNumberRegisteredException("Número já cadastrado!");
