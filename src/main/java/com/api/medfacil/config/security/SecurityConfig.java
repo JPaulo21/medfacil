@@ -27,6 +27,13 @@ public class SecurityConfig {
 
     private final TokenAuthorizationFilter tokenFilter;
 
+    private static final String[] PUBLIC_DOCS_RESOURCES = {
+            "/swagger-config/**",
+            "/swagger-ui/**",
+            "/docs-medfacil.html",
+            "/docs-medfacil/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception{
         return http
@@ -38,6 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                        .requestMatchers(PUBLIC_DOCS_RESOURCES).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
