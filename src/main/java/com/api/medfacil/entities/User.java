@@ -36,16 +36,8 @@ public class User implements UserDetails {
     @Column(length = 1)
     private String sex;
 
-    private String email;
-
-    @Column(length = 4)
-    private String ddi;
-
-    @Column(length = 3)
-    private String ddd;
-
-    @Column(name = "phone_number", length = 9)
-    private String phoneNumber;
+    @Embedded
+    private ContactUser contact;
 
     private String role;
 
@@ -86,7 +78,4 @@ public class User implements UserDetails {
         return this.enable;
     }
 
-    public String fullNumber(){
-        return this.ddi+this.ddd+this.phoneNumber;
-    }
 }

@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User save(User user){
         cpfRegistered(user.getCpf());
-        numberAlreadyRegistered(user.getDdi(), user.getDdd(), user.getPhoneNumber());
+        numberAlreadyRegistered(user.getContact().getDdi(), user.getContact().getDdd(), user.getContact().getPhoneNumber());
         return userRepository.save(user);
     }
 

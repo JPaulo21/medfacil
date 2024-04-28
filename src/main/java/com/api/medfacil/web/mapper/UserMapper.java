@@ -10,5 +10,6 @@ public interface UserMapper {
 
     @Mapping(target = "role", constant = "USER")
     @Mapping(target = "enable", constant = "true")
+    @Mapping(target = "contact", source = "contact") // Composição de objetos devem ser mapeados
     User toUser(UserDTO userDTO);
 }

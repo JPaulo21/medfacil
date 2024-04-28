@@ -19,11 +19,8 @@ public record UserDTO (
         LocalDate birthDate,
         @Length(min = 1, max = 1)
         String sex,
-        @Email(message = "E-mail inválido!")
-        String email,
-        String ddi,
-        String ddd,
-        String phoneNumber
+
+        ContactDTO contact
 
 ){
 }
