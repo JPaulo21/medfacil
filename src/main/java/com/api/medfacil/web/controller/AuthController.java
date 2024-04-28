@@ -1,8 +1,8 @@
 package com.api.medfacil.web.controller;
 
 
-import com.api.medfacil.config.JWT.TokenDTO;
-import com.api.medfacil.config.JWT.TokenService;
+import com.api.medfacil.config.security.JWT.TokenDTO;
+import com.api.medfacil.config.security.JWT.TokenService;
 import com.api.medfacil.entities.User;
 import com.api.medfacil.services.AuthService;
 import com.api.medfacil.services.UserService;

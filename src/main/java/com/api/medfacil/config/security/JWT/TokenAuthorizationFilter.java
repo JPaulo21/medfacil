@@ -1,4 +1,4 @@
-package com.api.medfacil.config.JWT;
+package com.api.medfacil.config.security.JWT;
 
 import com.api.medfacil.repositories.UserRepository;
 import jakarta.servlet.FilterChain;

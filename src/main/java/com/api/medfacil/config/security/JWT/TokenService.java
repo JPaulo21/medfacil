@@ -1,4 +1,4 @@
-package com.api.medfacil.config.JWT;
+package com.api.medfacil.config.security.JWT;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.api.medfacil.config.security;
 
-import com.api.medfacil.config.JWT.TokenAuthorizationFilter;
+import com.api.medfacil.config.security.JWT.TokenAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
