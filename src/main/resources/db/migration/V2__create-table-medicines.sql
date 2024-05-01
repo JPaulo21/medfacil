@@ -7,4 +7,4 @@ CREATE TABLE medicines (
     CONSTRAINT pk_medicines PRIMARY KEY(id)
 );
 
-ALTER TABLE medicines ADD CONSTRAINT FK_MEDICINES_ON_USER FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE medicines ADD CONSTRAINT fk_medicines_on_user FOREIGN KEY (user_id) REFERENCES users(id);

@@ -28,7 +28,6 @@ public class SecurityConfig {
     private final TokenAuthorizationFilter tokenFilter;
 
     private static final String[] PUBLIC_DOCS_RESOURCES = {
-            "/swagger-config/**",
             "/swagger-ui/**",
             "/docs-medfacil.html",
             "/docs-medfacil/**"

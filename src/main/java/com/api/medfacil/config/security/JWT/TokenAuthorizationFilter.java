@@ -43,7 +43,7 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
         if(authHeader == null) {
-            log.error("JWT Token está nulo, vazio ou não iniciado com 'Bearer '.");
+            log.debug("JWT Token está nulo, vazio ou não iniciado com 'Bearer '.");
             return null;
         }
         return authHeader.replace("Bearer ","");
