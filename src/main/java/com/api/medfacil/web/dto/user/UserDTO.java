@@ -11,7 +11,7 @@ public record UserDTO (
         @CPF(message = "CPF inválido!")
         String cpf,
         @NotBlank
-        @Pattern(regexp = "[a-zA-ZÀ-ÿ\\s]+$", message = "Somente letras e espaços são permitidos")
+        @Pattern(regexp = "[a-zA-ZÀ-ÿ\\s]+$", message = "Somente letras são permitidos")
         String name,
         @Past
         @NotNull
