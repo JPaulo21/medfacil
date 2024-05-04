@@ -68,4 +68,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(null);
     }
 
+    public User findByCpf(String cpf) {
+        return userRepository.findByCpf(cpf).orElseThrow(
+                () -> new UsernameNotFoundException("Usuário não encontrado")
+        );
+    }
 }
