@@ -27,6 +27,6 @@ public class ContactCaregiver {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "caregiver_id", nullable = false)
-    private Caregiver caregiverId;
+    private Caregiver caregiver;
 
 }

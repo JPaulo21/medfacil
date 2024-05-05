@@ -3,9 +3,12 @@ package com.api.medfacil.web.controller;
 import com.api.medfacil.entities.Caregiver;
 import com.api.medfacil.entities.ContactCaregiver;
 import com.api.medfacil.services.CaregiverService;
+import com.api.medfacil.services.ContactCaregiverService;
 import com.api.medfacil.web.dto.caregiver.CaregiverDTO;
 import com.api.medfacil.web.dto.caregiver.CaregiverQueryDTO;
+import com.api.medfacil.web.dto.caregiver.ContactCaregiverDTO;
 import com.api.medfacil.web.mapper.CaregiverMapper;
+import com.api.medfacil.web.mapper.ContactCaregiverMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,9 @@ import java.util.List;
 public class CaregiverController {
 
     private final CaregiverService caregiverService;
+    private final ContactCaregiverService contactCaregiverService;
     private final CaregiverMapper caregiverMapper;
+    private final ContactCaregiverMapper contactCaregiverMapper;
 
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody CaregiverDTO caregiverDTO, UriComponentsBuilder ucb){
@@ -48,6 +53,20 @@ public class CaregiverController {
         Page<CaregiverQueryDTO> caregiverQueryDTOPage = new PageImpl<CaregiverQueryDTO>(caregiverDTOList, caregiverPage.getPageable(),caregiverPage.getTotalElements());
 
         return ResponseEntity.ok(caregiverQueryDTOPage);
+    }
+
+    // Endpoints for contacts of caregiver
+
+    @PostMapping("/contacts")
+    public ResponseEntity createContact(@Valid @RequestBody ContactCaregiverDTO contactCaregiverDTO, UriComponentsBuilder ucb){
+        ContactCaregiver contactCaregiver = contactCaregiverService.save(contactCaregiverMapper.toEntity(contactCaregiverDTO));
+
+        URI location = ucb
+                .path("/api/v1/caregivers/contacts/${id}")
+                .buildAndExpand(contactCaregiver.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }
