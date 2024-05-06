@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public class CaregiverService {
         User user = authService.getUserAuthentication();
         Page<Caregiver> caregiverPage = carigiverRepository.findByUserId(user.getId(), pageable);
         return caregiverPage;
+    }
+
+    @Transactional(readOnly = true)
+    public Caregiver getCaregiverId(Integer id)  {
+        return carigiverRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Caregiver id:  not found")
+        );
     }
 }
