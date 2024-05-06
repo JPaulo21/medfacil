@@ -1,6 +1,7 @@
 package com.api.medfacil.services;
 
 import com.api.medfacil.entities.Medicine;
+import com.api.medfacil.entities.User;
 import com.api.medfacil.repositories.MedicineRepository;
 import com.api.medfacil.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class MedicineService {
 
     private final MedicineRepository medicineRepository;
-    private final UserRepository userRepository;
+    private final AuthService authService;
 
     @Transactional
     public Medicine save(Medicine medicine){
         return medicineRepository.save(medicine);
     }
 
-    public Page<Medicine> getMedicinesByUser(Integer id, Pageable page) {
-        userRepository.findById(id).orElseThrow(
-                () -> new UsernameNotFoundException("Usuário não encontrado!")
-        );
-
-        Page<Medicine> medicinePage = medicineRepository.findByUserId(id, page);
+    public Page<Medicine> getMedicinesByUser(Pageable page) {
+        User user = authService.getUserAuthentication();
+        Page<Medicine> medicinePage = medicineRepository.findByUserId(user.getId(), page);
 
         return medicinePage;
     }

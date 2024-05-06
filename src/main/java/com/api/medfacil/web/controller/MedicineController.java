@@ -56,8 +56,8 @@ public class MedicineController {
         )
     )
     @GetMapping("/user/{id}")
-    public ResponseEntity<Page<MedicineQueryDTO>> getMedicinesByUser(@PageableDefault(size = 10) Pageable page, @PathVariable Integer id){
-        Page<Medicine> medicinePage = medicineService.getMedicinesByUser(id, page);
+    public ResponseEntity<Page<MedicineQueryDTO>> getMedicinesByUser(@PageableDefault(size = 10) Pageable page){
+        Page<Medicine> medicinePage = medicineService.getMedicinesByUser(page);
 
         List<MedicineQueryDTO> listMedicineDTO = medicinePage
                 .getContent()
@@ -67,8 +67,7 @@ public class MedicineController {
 
         Page<MedicineQueryDTO> medicineDTOPage = new PageImpl<>(listMedicineDTO, medicinePage.getPageable(), medicinePage.getTotalElements());
 
-        return ResponseEntity
-                .ok(medicineDTOPage);
+        return ResponseEntity.ok(medicineDTOPage);
     }
 }
 
