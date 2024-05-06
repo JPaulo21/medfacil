@@ -20,6 +20,7 @@ public record UserDTO (
         @Length(min = 1, max = 1)
         String sex,
 
+        @NotNull
         ContactDTO contact
 
 ){
